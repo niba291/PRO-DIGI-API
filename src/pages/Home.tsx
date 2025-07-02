@@ -1,49 +1,48 @@
 import { useState, useEffect } from "preact/hooks";
 
-import { CardDigimon } from "@components/Card/CardDigimon";
-import { SoftCardDigimon, type Props as PropsSoftCardDigimon } from "@components/Card/SoftCardDigimon";
 import { Filter } from "@components/Filter/Filter";
 import { InputSearch } from "@components/Inputs/InputSearch";
+import { CardDigimon } from "@components/Card/CardDigimon";
+import { CardRotating } from "@components/Card/CardRotating";
+
+import { Cards } from "@assets/Icons/Cards";
 
 import { getRandom } from "@utils/getRandom";
 
 import { getDigimon, getList } from "@services/digimonApi";
 
-import type { IDigimon } from "../types/digimon";
+import type { IDigimon } from "@typings/digimon";
+import type { Props as PropsCard } from "@typings/card";
 
 export const Home = () => {
-    const [search, setSearch] = useState("");
-    const [list, setList] = useState<PropsSoftCardDigimon[]>([]);
+    const [list, setList] = useState<PropsCard[]>([]);
     const [digimon, setDigimon] = useState<IDigimon | null>(null);
     const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
-    const handleSearch = async () => {
+    const handleSearch = async (search : string = "") => {
         if (!search.trim()) return;
 
         setLoading(true);
-        setError(null);
 
         try {
             const result = await getList({
-                "name": search.trim(),
-                "page": 0
+                name: search.trim(),
+                page: 0,
             });
             setList(result?.content ?? []);
         } catch (e) {
-            setError("No se encontró el Digimon buscado.");
+            console.log(e)
         } finally {
             setLoading(false);
         }
     };
 
-    const handleOnClick = async (id : string = "") => {
+    const handleOnClick = async (id: string = "") => {
         try {
             const result = await getDigimon(id);
             setDigimon(result);
         } catch (e) {
             console.error(e);
-            setError("No se encontró el Digimon buscado.");
         }
     };
 
@@ -56,7 +55,7 @@ export const Home = () => {
         const list = await getList();
         setList(list?.content);
         setLoading(false);
-    };    
+    };
 
     useEffect(() => {
         getListDigimon();
@@ -65,91 +64,54 @@ export const Home = () => {
 
     return (
         <>
-            <section
-                className="relative z-20 basis-1/5 bg-center bg-cover bg-no-repeat py-30 p-4 text-white"
-                // style={{
-                //     backgroundImage: 'url("/Digimons/section32.webp")',
-                // }}
-            >
-                <h1 className="text-2xl font-bold mb-4">
-                    ¡Ey, Tamer! <br />
-                    ¡Explora el mundo digital aquí!
-                </h1>
-                <div className="mb-8 flex justify-center items-center w-full">
-                    <button onClick={handleOnRefresh} className="cursor-pointer px-20 py-2 text-lg text-bold bg-gradient-to-r from-teal-300 via-gray-600 to-teal-800 text-white rounded-lg transition">
-                        ↻ Barajar Tablero
-                    </button>
-                </div>
-                <InputSearch
-                    setValue={setSearch}
-                    value={search}
-                    onClick={handleSearch}
-                />
-
-                {/* {loading && <p className="text-white">Cargando...</p>}
-                {error && (
-                    <p className="text-red-500 font-semibold">{error}</p>
-                )}
-
-                {digimon && (
-                    <div className="mt-4 bg-white rounded p-4 shadow-md text-gray-800">
-                        <h2 className="text-lg font-bold mb-2">
-                            {digimon.name}
-                        </h2>
-                        {digimon.images[0] && (
-                            <img
-                                src={digimon.images[0].href}
-                                alt={digimon.name}
-                                className="w-32 h-auto mb-2"
-                            />
-                        )}
-                        <p className="text-sm">
-                            Niveles:{" "}
-                            {digimon.levels
-                                .map((lvl) => lvl.level)
-                                .join(", ") || "N/A"}
-                        </p>
-                        <p className="text-sm">
-                            Tipos:{" "}
-                            {digimon.types.map((t) => t.type).join(", ") ||
-                                "N/A"}
-                        </p>
-                        <p className="text-sm">
-                            Atributos:{" "}
-                            {digimon.attributes
-                                .map((a) => a.attribute)
-                                .join(", ") || "N/A"}
-                        </p>
+            <div className="w-full flex flex-col gap-4">
+                <section className="relative w-full md:pt-30 pt-24 text-white text-center px-6">
+                    {/* <h1 className="lg:text-2xl font-bold mb-4">
+                        ¡Ey, Tamer Explora el mundo digital aquí!
+                    </h1> */}
+                    <div className="flex flex-wrap w-full gap-4">
+                        <InputSearch
+                            onChange={handleSearch}
+                            classNameContent="w-[calc(100%-3.5rem)]"
+                        />
+                        <button
+                            onClick={handleOnRefresh}
+                            // className="cursor-pointer w-[1.85rem] h-[1.85rem] md:w-10 md:h-10 flex justify-center items-center text-lg text-bold bg-gradient-to-r from-teal-300 via-gray-600 to-teal-800 text-white rounded-full transition"
+                            className="cursor-pointer w-[1.85rem] h-[1.85rem] md:w-10 md:h-10 flex justify-center items-center text-lg text-bold bg-gradient-to-r backdrop-blur-lg text-white rounded-full transition border hover:text-teal-400"
+                        >
+                            <Cards/>
+                        </button>
+                        <Filter />
                     </div>
-                )} */}
+                </section>
 
-                <Filter/>
-            </section>
-
-            <section className="relative z-20 flex-1 p-4 pt-20 flex flex-col justify-start items-center max-h-[94vh] overflow-hidden">
-                <div className="grid grid-cols-6">
+                <section className="flex flex-1 overflow-hidden">
                     {loading ? (
-                        <div className={"text-9xl text-white"}>Loading</div>
-                    ) : 
-                        list.map((digimon) => (
-                            <button className={"cursor-pointer scale-65 -mb-20 -mt-6"} onClick={() => handleOnClick(digimon.id.toString())}>
-                                <CardDigimon {...digimon} />
-                            </button>
-                        ))
+                        <div className={"text-9xl text-white"}>
+                            Loading
+                        </div>
+                    ) : (
+                        <CardRotating list={list} onClick={handleOnClick}/>
+                    )}
+                </section>
+            </div>
+            <section className="md:w-1/2 w-full p-4 py-28 hidden lg:flex flex-wrap justify-center items-center">
+                {/* <button
+                    onClick={() =>
+                        handleOnClick(
+                            Math.floor(getRandom(1, 1488)).toString()
+                        )
                     }
-                </div>
-            </section>
-
-            <section
-                className="relative z-20 basis-1/5 bg-center bg-cover bg-no-repeat p-4 py-28 flex flex-wrap justify-center items-center"
-                // style={{
-                //     backgroundImage: 'url("/Digimons/section1.webp")',
-                // }}
-            >
-                    <button onClick={() => handleOnClick(Math.floor(getRandom(1, 1488)).toString())} className="cursor-pointer px-20 py-2 text-lg text-bold bg-gradient-to-r from-teal-300 via-gray-600 to-teal-800 text-white rounded-lg transition">
-                        ↻ Barajar Digimon
-                    </button>
-                    <CardDigimon {...digimon} id={digimon?.id ?? 0} name={digimon?.name ?? "---"} image={(digimon?.images?.[0]?.href as string)} />
+                    className="cursor-pointer px-20 py-2 text-lg text-bold bg-gradient-to-r from-teal-300 via-gray-600 to-teal-800 text-white rounded-lg transition"
+                >
+                    ↻ Barajar Digimon
+                </button> */}
+                <CardDigimon
+                    {...digimon}
+                    id={digimon?.id ?? 0}
+                    name={digimon?.name ?? "---"}
+                    image={digimon?.images?.[0]?.href as string}
+                />
             </section>
         </>
     );

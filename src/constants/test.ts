@@ -1,4 +1,4 @@
-import type { IDigimon } from "../types/digimon"
+import type { IDigimon } from "../typings/digimon"
 
 export const testDigimons: IDigimon[] = [
   {

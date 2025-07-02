@@ -1,7 +1,7 @@
 import { useMask } from "@hooks/useMask";
 import { useParticles } from "@hooks/useParticles";
 import { fieldGradients } from "@utils/gradiants";
-import type { IDigimon } from "../../types/digimon";
+import type { IDigimon } from "@typings/digimon";
 
 export const CardDigimon = ({
     id,

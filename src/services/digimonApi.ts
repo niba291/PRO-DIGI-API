@@ -3,8 +3,8 @@ import { getRandom } from "@utils/getRandom";
 
 export const getList = async (props? : any) => {
     const params = {
-        "pageSize": "24",
-        "page": Math.floor(getRandom(1, 61)).toString(),
+        "pageSize": "8",
+        "page": Math.floor(getRandom(1, 82)).toString(),
         ...props
     };
     const parameters = new URLSearchParams(params).toString();

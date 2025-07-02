@@ -1,14 +1,15 @@
 export const Header = () => (
-    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg p-4 flex justify-between text-2xl font-bold">
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg p-4 flex justify-center text-2xl font-bold">
         <img
             src="/public/Digimons/digivice.webp"
             alt="Logo Digivice"
-            className="h-12 w-auto ml-34"
+            className="h-12 md:ml-34 items-start"
         />
-        <div className="absolute left-1/2 transform -translate-x-1/2">
-            <h1 className="text-gray-400 text-4xl font-bold mb-0 ">
-                ¡Bienvenido a la DigiDex!
-            </h1>
-        </div>
+        <h1 className="flex-1 hidden md:block text-gray-400 text-4xl font-bold mb-0 text-center md:pr-34">
+            ¡Bienvenido a la DigiDex!
+        </h1>
+        <h1 className="md:hidden flex-1 text-gray-400 text-4xl font-bold mb-0 text-center">
+            DigiDex
+        </h1>
     </header>
 );
