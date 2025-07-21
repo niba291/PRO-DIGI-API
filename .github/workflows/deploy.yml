@@ -3,7 +3,7 @@ name: Deploy Preact to GitHub Pages
 on:
   push:
     branches:
-      - master  # o 'master' si ese es tu branch principal
+      - master
 
 jobs:
   build-and-deploy:
