@@ -5,6 +5,7 @@ import preact from "@preact/preset-vite";
 import path from "path";
 
 export default defineConfig({
+    base: "/PRO-DIGI-API/",
     plugins: [preact(), tsconfigPaths(), tailwindcss()],
     resolve: {
         alias: {
