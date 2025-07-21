@@ -4,7 +4,7 @@
 
 import "@styles/index.css";
 
-import { Layout } from "@layouts/layout";
+import { Layout } from "@layouts/Layout";
 import { Home } from "@pages/Home";
 
 export const App = () => {
