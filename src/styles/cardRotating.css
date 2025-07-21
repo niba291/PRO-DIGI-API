@@ -5,6 +5,9 @@
 }
 
 .inner {
+    /* --w: 6rem;
+    --h: 10rem; */
+
     --w: 10rem;
     --h: 16.25rem;
     --translateZ: calc((var(--w) + var(--h)) + 0px);
@@ -21,20 +24,26 @@
     animation: rotating 60s linear infinite;
 }
 
+@media (min-width: 768px) {
+    .inner {
+        --w: 10rem;
+        --h: 16.25rem;
+    }
+}
+
 @keyframes rotating {
     from {
-        transform: perspective(var(--perspective)) rotateX(var(--rotateX))
+        transform: perspective(var(--perspective)) 
             rotateY(0);
     }
     to {
-        transform: perspective(var(--perspective)) rotateX(var(--rotateX))
+        transform: perspective(var(--perspective)) 
             rotateY(1turn);
     }
 }
 
 .card {
     position: absolute;
-    /* border: 2px solid rgba(var(--color-card)); */
     border-radius: 12px;
     overflow: hidden;
     inset: 0;
