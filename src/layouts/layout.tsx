@@ -16,7 +16,7 @@ export const Layout = ({
         <div 
             className="flex flex-col bg-cover md:bg-auto"
             style={{
-                backgroundImage: !isSmallScreen ? `url("/Digimons/bg.webp")` : `url("/Digimons/${Math.floor(getRandom(1, 7))}.webp")`,
+                backgroundImage: !isSmallScreen ? `url("${import.meta.env.BASE_URL}Digimons/bg.webp")` : `url("url("${import.meta.env.BASE_URL}Digimons/${Math.floor(getRandom(1, 7))}.webp")`,
             }}
         >
             <Header />

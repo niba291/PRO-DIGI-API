@@ -111,7 +111,7 @@ export const Home = () => {
                 <section className="flex flex-1 overflow-hidden">
                     {loading ? (
                         <div className={"flex justify-center items-center w-full h-full"}>
-                            <img src="/Digimons/loading.gif" alt="loading" class={"w-50"} />
+                            <img src={`${import.meta.env.BASE_URL}/Digimons/loading.gif`} alt="loading" class={"w-50"} />
                         </div>
                     ) : (
                         <CardRotating list={list} onClick={handleOnClick}/>

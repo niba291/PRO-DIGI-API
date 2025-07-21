@@ -1,7 +1,7 @@
 export const Header = () => (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-lg p-4 flex justify-center text-2xl font-bold">
         <img
-            src="/public/Digimons/digivice.webp"
+            src={`${import.meta.env.BASE_URL}/Digimons/digivice.webp`}
             alt="Logo Digivice"
             className="h-12 md:ml-34 items-start"
         />
