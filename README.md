@@ -10,4 +10,4 @@ It features:
 
 Built for flexibility and performance, Digi API is ideal for building dashboards or integrating with digital platforms.
 
-
+<img src="https://github.com/niba291/PRO-DIGI-API/blob/master/image.png" />
