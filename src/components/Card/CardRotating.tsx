@@ -1,6 +1,6 @@
 import type { Props as PropsCard } from "@typings/card";
 import { useMask } from "@hooks/useMask";
-import "@styles/CardRotating.css";
+import "@styles/cardRotating.css";
 
 interface Props {
     list : PropsCard[],
